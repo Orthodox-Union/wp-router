@@ -1,0 +1,12 @@
+{
+    "name": "orthodox-union/wp-router",
+    "authors": [
+        {
+            "name": "Avi Block",
+            "email": "atblock@gmail.com"
+        }
+    ],
+    "require": {
+
+    }
+}
