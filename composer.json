@@ -9,9 +9,7 @@
     "require": {
 
     },
-    {
     "autoload": {
         "psr-0": { "Route": "" }
     }
-}
 }
