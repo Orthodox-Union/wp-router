@@ -21,7 +21,7 @@ class Route
         $this->dategmt = isset($args['date']) ? $args['date'] : current_time('mysql', 1);
         $this->type = isset($args['type']) ? $args['type'] : 'page';
         $this->vars = $args['vars'];
-        $this->template = $args['template'];
+        $this->template = isset($args['template']) ? $args['template'] : false;
         $this->routeType = isset($args['routeType']) ? $args['routeType'] : 'static';
         $this->handler = $args['handler'];
 
