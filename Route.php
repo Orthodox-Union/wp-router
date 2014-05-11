@@ -24,6 +24,7 @@ class Route
         $this->template = isset($args['template']) ? $args['template'] : false;
         $this->routeType = isset($args['routeType']) ? $args['routeType'] : 'static';
         $this->handler = $args['handler'];
+        $this->ssl = isset($args['ssl']) ? $args['ssl'] : false;
 
         $this->setupRewrite();
     }
@@ -44,6 +45,14 @@ class Route
                 : preg_match('#'.$route.'#',$wp->request,$matches);
             
             if ($routeMatches) {
+                if ($that->ssl) {
+                    $using_ssl = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' || $_SERVER['SERVER_PORT'] == 443;
+
+                    if (!$using_ssl) {
+                        header('Location: https://' . $_SERVER['SERVER_NAME'].$_SERVER['REQUEST_URI']);die;
+                    }
+                }
+
                 Route::$routeFound = true;
                 $wp->query_vars = $vars($matches);
                 
