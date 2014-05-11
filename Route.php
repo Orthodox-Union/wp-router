@@ -71,7 +71,9 @@ class Route
     }
 }
 
-function virtualPage($title,$slug) {
+function virtualPage($title) {
+    $slug = ltrim($_SERVER['REQUEST_URI'],'/');
+
     $createPost = function() use ($title,$slug) {
         $post = new stdClass;
 
