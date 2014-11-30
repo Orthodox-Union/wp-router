@@ -62,7 +62,7 @@ class Route
                     });
                 }
        
-                $handler($vars($matches));
+                $handler($wp->query_vars);
             }
 
             return;
