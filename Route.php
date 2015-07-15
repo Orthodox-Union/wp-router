@@ -109,7 +109,7 @@ function virtualPage($title) {
         // reset wp_query properties to simulate a found page
         $wp_query->is_page = TRUE;
         $wp_query->is_singular = TRUE;
-        $wp_query->is_home = FALSE;
+        $wp_query->is_home = isset($wp_query->query['is_home']) ? $wp_query->query['is_home'] : false;
         $wp_query->is_archive = FALSE;
         $wp_query->is_category = FALSE;
         unset($wp_query->query['error']);
