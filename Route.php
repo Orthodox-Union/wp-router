@@ -71,26 +71,28 @@ class Route
     }
 }
 
-function virtualPage($title) {
-    $slug = trim($_SERVER['REQUEST_URI'],'/');
+function virtualPage($title, $slug = null, $post = null) {
+    $slug = $slug ?: trim($_SERVER['REQUEST_URI'], '/');
 
-    $createPost = function() use ($title,$slug) {
-        $post = new stdClass;
+    $createPost = function() use ($title, $slug, $post) {
+        if ($post === null) {
+            $post = new stdClass;
 
-        // fill properties of $post with everything a page in the database would have
-        $post->ID = -1;                           // use an illegal value for page ID
-        $post->post_title = $title;
-        $post->post_excerpt = '';
-        $post->post_status = 'publish';
-        $post->comment_status = 'closed';        // mark as closed for comments, since page doesn't exist
-        $post->ping_status = 'closed';           // mark as closed for pings, since page doesn't exist
-        $post->post_password = '';               // no password
-        $post->post_name = $slug;
-        $post->to_ping = '';
-        $post->pinged = '';
-        $post->post_type = 'page';
-        $post->post_mime_type = '';
-        $post->comment_count = 0;
+            // fill properties of $post with everything a page in the database would have
+            $post->ID = -1;                           // use an illegal value for page ID
+            $post->post_title = $title;
+            $post->post_excerpt = '';
+            $post->post_status = 'publish';
+            $post->comment_status = 'closed';        // mark as closed for comments, since page doesn't exist
+            $post->ping_status = 'closed';           // mark as closed for pings, since page doesn't exist
+            $post->post_password = '';               // no password
+            $post->post_name = $slug;
+            $post->to_ping = '';
+            $post->pinged = '';
+            $post->post_type = 'page';
+            $post->post_mime_type = '';
+            $post->comment_count = 0;
+        }
 
         return $post;
     };
