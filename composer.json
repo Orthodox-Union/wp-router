@@ -1,12 +1,15 @@
 {
     "name": "orthodox-union/wp-router",
+    "description": "A custom routing plugin for WordPress.",
     "authors": [
         {
             "name": "Avi Block",
             "email": "atblock@gmail.com"
         }
     ],
-    "autoload": {
-        "psr-0": { "Route": "" }
+    "autoload-dev": {
+        "psr-4": {
+            "wpRouter\\": "includes/"
+        }
     }
 }
