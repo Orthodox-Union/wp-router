@@ -13,7 +13,7 @@ class Route
     private array $vars;
     private ?string $template;
     private string $routeType;
-    private callable $handler;
+    private $handler;
     private bool $ssl;
 
     private static bool $routeFound = false;
