@@ -13,7 +13,7 @@ class Route
     private array $vars;
     private ?string $template;
     private string $routeType;
-    private $handler;
+    private callable $handler;
     private bool $ssl;
 
     private static bool $routeFound = false;
@@ -57,18 +57,21 @@ class Route
 
             if ($routeMatches) {
                 if ($this->ssl && !$this->isSsl()) {
-                    wp_redirect(esc_url('https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']));
-                    exit;
+                    $redirectUrl = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                    if (filter_var($redirectUrl, FILTER_VALIDATE_URL)) {
+                        wp_redirect(esc_url($redirectUrl));
+                        exit;
+                    }
                 }
 
                 self::$routeFound = true;
-                $wp->query_vars = call_user_func($this->vars, $matches);
+                $wp->query_vars = array_map('sanitize_text_field', $this->vars);
 
                 if ($this->template) {
                     add_filter('template_include', fn() => locate_template($this->template, false));
                 }
 
-                call_user_func($this->handler, $wp->query_vars);
+                call_user_func('sanitize_text_field', $this->handler, $wp->query_vars);
             }
         });
     }
