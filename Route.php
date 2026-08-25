@@ -7,7 +7,13 @@ class Route
     private $content = NULL;
     private $author = NULL;
     private $date = NULL;
+    private $dategmt = NULL;
     private $type = NULL;
+    private $vars = NULL;
+    private $template = false;
+    private $routeType = 'static';
+    private $handler = NULL;
+    private $ssl = false;
     
     static $routeFound = false;
 
